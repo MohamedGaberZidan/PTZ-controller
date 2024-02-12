@@ -4,6 +4,21 @@
  * ESP32 
  * AS5600 Encoder 
  * TMC2208
+ * NEMA14 stepper motor
+ * Ethernet cable color code
+ * Cable                   Pin 
+ * Orange                  Tmc2208 EN        
+ * White with orange       Tmc2208 VDD or VIO
+ * Brown                   AS5600 SDA
+ * White with brown        AS5600 SCL
+ * Green                   Tmc2208 VM
+ * White with green        Tmc2208 DIR
+ * Blue                    Tmc2208 STEP
+ * 
+ * ESP32
+ * SCL                     pin22
+ * SDA                     pin21
+ * White with blue         GND
 */
 #include <AS5600.h>
 #include <FastAccelStepper.h>
@@ -17,7 +32,6 @@
 #define step3_pinDIR  33
 
 #define StepD 13                              // Pin GPio 13 Activate Deactivate steppers
-
 #define StepFOC 32                            //Focus motor enable pin for Stepper3
 #define StepZOOM 32                            //Focus motor enable pin for Stepper3
 
@@ -109,7 +123,6 @@ void setup(){
 
   delay(100);
   disableCore1WDT();
-
   delay(2000);
 
 
