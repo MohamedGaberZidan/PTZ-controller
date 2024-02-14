@@ -14,7 +14,7 @@
  * Green                   Tmc2208 VM
  * White with green        Tmc2208 DIR
  * Blue                    Tmc2208 STEP
- * 
+ * White with blue         Common ground 
  * ESP32
  * SCL                     pin22
  * SDA                     pin21
@@ -24,6 +24,9 @@
 #include <FastAccelStepper.h>
 #include <WiFi.h>
 #include "esp_task_wdt.h"
+#include <SPI.h>
+#include <Wire.h>
+#include <nvs_flash.h>
 #define step1_pinSTEP 26
 #define step1_pinDIR  27
 #define step2_pinSTEP 12
@@ -81,7 +84,7 @@ IPAddress subnet(255, 255, 255, 0);   // Subnet mask
 IPAddress primaryDNS(192, 168, 1, 1); // Primary DNS (optional)
 IPAddress secondaryDNS(0, 0, 0, 0);   // Secondary DNS (optional)
 
-
+int position = 1;
 void setup(){
 
 
@@ -144,10 +147,19 @@ void setup(){
   Serial.println(WiFi.localIP());  // Print the ESP32 IP address to Serial Monitor
 
 
-
+  digitalWrite(StepD, LOW);                                     //Stepper Driver Activation
 }//end setup
 
 void loop(){
+  stepper1->setSpeedInHz(3000);
+  stepper1->setAcceleration(1000);
+   stepper1->moveTo(position);  
+   while (stepper1->isRunning() ) {
+        delay(10);
+        print("moving");
+      }
+
+  position+=5;
 
 
 }
